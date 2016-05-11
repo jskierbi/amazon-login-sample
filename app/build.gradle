@@ -1,3 +1,16 @@
+buildscript {
+  ext.kotlin_version = '1.0.1-2'
+  repositories {
+    mavenCentral()
+  }
+  dependencies {
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+  }
+}
+repositories {
+  mavenCentral()
+  jcenter()
+}
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
@@ -27,17 +40,8 @@ dependencies {
   compile fileTree(dir: 'libs', include: ['*.jar'])
   testCompile 'junit:junit:4.12'
   compile 'com.android.support:appcompat-v7:23.3.0'
+  compile 'com.android.support:recyclerview-v7:23.3.0'
   compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-}
-buildscript {
-  ext.kotlin_version = '1.0.1-2'
-  repositories {
-    mavenCentral()
-  }
-  dependencies {
-    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-  }
-}
-repositories {
-  mavenCentral()
+
+  compile 'io.reactivex:rxandroid:1.2.0'
 }
