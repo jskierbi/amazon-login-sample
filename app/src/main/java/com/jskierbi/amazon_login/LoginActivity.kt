@@ -20,6 +20,10 @@ class LoginActivity : Activity() {
     val TAG = LoginActivity::class.java.simpleName
   }
 
+  init {
+
+  }
+
   val mAuthManager by lazy { AmazonAuthorizationManager(this, Bundle.EMPTY) }
 
   override fun onCreate(state: Bundle?) {
@@ -32,26 +36,13 @@ class LoginActivity : Activity() {
   }
 
   inner class AuthListener : AuthorizationListener {
-    override fun onSuccess(bundle: Bundle?) {
-      Log.d(TAG, "AuthListener.onSuccess()")
-      mAuthManager.getProfile(ProfiListener())
-    }
-
-    override fun onError(p0: AuthError?) {
-      Log.d(TAG, "AuthListener.onError()")
-    }
-
-    override fun onCancel(p0: Bundle?) {
-      Log.d(TAG, "AuthListener.onCancel()")
-    }
-
+    override fun onSuccess(bundle: Bundle?) = mAuthManager.getProfile(ProfiListener()).unit
+    override fun onError(p0: AuthError?) = Log.d(TAG, "AuthListener.onError()").unit
+    override fun onCancel(p0: Bundle?) = Log.d(TAG, "AuthListener.onCancel()").unit
   }
 
   inner class ProfiListener : APIListener {
-    override fun onError(error: AuthError?) {
-      Log.d(TAG, "ProfiListener.onError")
-    }
-
+    override fun onError(error: AuthError?) = Log.d(TAG, "ProfiListener.onError").unit
     override fun onSuccess(response: Bundle) {
       Log.d(TAG, "ProfiListener.onSuccess()")
 
@@ -69,10 +60,10 @@ class LoginActivity : Activity() {
           $zipcode
       """)
     }
-
   }
 }
 
 inline fun Activity.onClick(id: Int, crossinline listener: (View) -> Unit) = findViewById(id)!!.setOnClickListener { listener(it) }
 fun Activity.toast(text: String) = Toast.makeText(this, text, Toast.LENGTH_LONG).show()
 
+val Any?.unit: Unit get() = Unit
